@@ -108,12 +108,19 @@
   function prosesPeminjaman(token){
     var act = 'peminjaman/simpan';
     var anggota = $('#id-anggota').val();
+    var id = $('#id_anggota').val();
     $.post(act, {
           _token: token,
           anggota: anggota,
+          id: id,
       },
      function (data) {
-      location.reload();
+         if(data.status === 'error'){
+            alert(data.message);
+            }else{
+              alert(data.message);
+                location.reload();
+                }
        //$('#table-data').html(data);
     });
   }

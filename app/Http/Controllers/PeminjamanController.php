@@ -53,13 +53,28 @@ class PeminjamanController extends Controller
     {
         
         $anggota = Anggota::where('nis', $request->code)->first();
-        //dd($anggota);
+
+        if($anggota == null){
+            return response()->json(['status' => 'error', 'message' => 'Anggota dengan NIS ' .$request->code.' tidak ditemukan.']);
+        }
+
+        $jumlahPeminjamanBelumSelesai = Peminjaman::where('id_anggota', $anggota->id)
+                                        ->where('status_peminjaman', 0)->get()->count();
+
+        if($jumlahPeminjamanBelumSelesai > 2){
+            return response()->json(['status' => 'error',
+            'message' => 'Anda tidak dapat melakukan peminjaman baru karena Anda telah mencapai batas maksimum peminjaman sebanyak tiga kali dan semua pinjaman tersebut belum dikembalikan. Silakan kembalikan buku yang telah Anda pinjam untuk dapat melakukan peminjaman baru.']);
+        }
         return response()->json($anggota->id);
     }
 
     public function simpanDetil(Request $request)
     {
+
         $dataBuku = Buku::where('kode', $request->code)->first();
+        if($dataBuku == null){
+            return response()->json(['status' => 'error', 'message' => 'Buku dengan kode ' .$request->code.' tidak ditemukan.']);
+        }
         $cekBuku = DetilPeminjamanSementara::where('id_buku', $dataBuku->id)->first();
         if($cekBuku != null){
             return response()->json(['status' => 'error', 'message' => 'Buku ' .$dataBuku->judul.' sudah pernah diinput.']);
@@ -90,6 +105,20 @@ class PeminjamanController extends Controller
 
     public function simpan(Request $request)
     {
+        $idAnggota = 0;
+        if(Auth::user() != null){
+            $idAnggota = $request->id;
+        }else{
+            $idAnggota = $anggota;
+        }
+        $jumlahPeminjamanBelumSelesai = Peminjaman::where('id_anggota', $idAnggota)
+                                        ->where('status_peminjaman', 0)->get()->count();
+
+        if($jumlahPeminjamanBelumSelesai > 2){
+            return response()->json(['status' => 'error',
+            'message' => 'Anda tidak dapat melakukan peminjaman baru karena Anda telah mencapai batas maksimum peminjaman sebanyak tiga kali dan semua pinjaman tersebut belum dikembalikan. Silakan kembalikan buku yang telah Anda pinjam untuk dapat melakukan peminjaman baru.']);
+        }
+
         //dd($request->all());
         date_default_timezone_set("Asia/Jakarta");
         $tanggal1= date("YmdHis");
@@ -110,7 +139,7 @@ class PeminjamanController extends Controller
         $trans->total_denda = 0;
         $trans->status_peminjaman = 0;
         
-        $trans->id_anggota = $request->anggota;
+        $trans->id_anggota = $idAnggota;
             //$trans->id_staf = $staf->id;
         
         $trans->save();
@@ -128,7 +157,10 @@ class PeminjamanController extends Controller
         }
 
         DB::table('detil_peminjaman_sementara')->delete();
-        //return redirect('peminjaman');  
+        //return redirect('peminjaman');
+
+         return response()->json(['status' => 'success',
+            'message' => 'Peminjaman telah diproses.']);
 
     }
 
