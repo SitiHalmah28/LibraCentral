@@ -44,6 +44,9 @@ Route::get('inventori/buku-delete/{id}', 'BukuController@delete')->name('buku-de
 Route::get('user/anggota', 'AnggotaController@index')->name('anggota');
 Route::get('user/anggota-tambah', 'AnggotaController@tambah')->name('anggota-tambah');
 Route::post('user/anggota-simpan', 'AnggotaController@simpan')->name('anggota-simpan');
+Route::get('user/anggota-cetak-kartu', 'AnggotaController@cetakKartu')->name('anggota-cetak-kartu');
+Route::get('user/anggota-cetak/{id}', 'AnggotaController@cetak')->name('anggota-cetak');
+
 
 Route::get('user/anggota-edit/{id}', 'AnggotaController@edit')->name('anggota-edit');
 Route::post('user/anggota-update/{id}', 'AnggotaController@update')->name('anggota-update');

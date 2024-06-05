@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Anggota;
 use App\Models\User;
 use Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AnggotaController extends Controller
 {
@@ -67,6 +68,20 @@ class AnggotaController extends Controller
         $user->save();
 
         return redirect('user/anggota');
+    }
+
+    public function cetakKartu (){
+        $data = Anggota::all();
+        $pdf= Pdf::loadView('anggota.kartu-cetak', compact('data'));
+        return $pdf->stream('KartuAnggota.pdf');
+        //return view('anggota.kartu-cetak');
+    }
+
+    public function cetak ($id){
+        $data = Anggota::where('id', $id)->get();
+        $pdf= Pdf::loadView('anggota.kartu-cetak', compact('data'));
+        return $pdf->stream('KartuAnggota.pdf');
+        //return view('anggota.kartu-cetak');
     }
     
     public function delete ($id){
