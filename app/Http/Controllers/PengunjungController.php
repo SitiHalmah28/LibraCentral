@@ -13,19 +13,20 @@ class PengunjungController extends Controller
         return view('pengunjung.pengunjung', compact('data'));
     }
 
-    public function tambah (){
-        $dataAnggota = Anggota::all();
-        return view('pengunjung.tambah', compact('dataAnggota'));
-    }
-
     public function simpan (Request $request){
         date_default_timezone_set("Asia/Jakarta");
-        $data = $request->except('_token', 'submit');
-        $data['tanggal'] = date("Y-m-d");
-        
-        Pengunjung::create($data);
+        $anggota = Anggota::where('nis', $request->code)->first();
+        if($anggota == null){
+            return response()->json(['status' => 'error', 'message' => 'Anggota dengan NIS ' .$request->code.' tidak ditemukan.']);
+        }
 
-        return redirect('pengunjung');
+        $data = new Pengunjung();
+        $data->tanggal = date("Y-m-d");
+        $data->id_anggota = $anggota->id;
+        $data->save();
+
+        return response()->json(['status' => 'success', 'message' => 'Data telah berhasil disimpan.']);
+
     }
     
     public function delete ($id){

@@ -186,12 +186,22 @@
       @if(Auth::user() != null)
       <li class="nav-heading">Transaksi</li>
       @endif
+
+      @if(Auth::user() == null)
       <li class="nav-item">
-        <a class="nav-link {{ request()->is('/') ? '' : 'collapsed' }}" href="{{ route('temukan-buku') }}">
+        <a class="nav-link {{ request()->is('/') ? '' : 'collapsed' }}" href="/">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span>Pencatatan Kunjungan Tamu</span>
+        </a>
+      </li><!-- End Login Page Nav -->
+      @endif
+
+      <li class="nav-item">
+        <a class="nav-link {{ request()->is('temukan-buku') ? '' : 'collapsed' }}" href="{{ route('temukan-buku') }}">
           <i class="bi bi-question-circle"></i>
           <span>Temukan Buku</span>
         </a>
-      </li><!-- End F.A.Q Page Nav -->
+      </li>
       @if(Auth::user() != null && Auth::user()->role != 'Anggota')
       <li class="nav-item">
         <a class="nav-link {{ request()->is('relokasi*') ? '' : 'collapsed' }}" href="{{ route('relokasi') }}">
@@ -200,14 +210,8 @@
         </a>
       </li><!-- End F.A.Q Page Nav -->
       @endif
-      @if(Auth::user() != null && Auth::user()->role != 'Anggota')
-      <li class="nav-item">
-        <a class="nav-link {{ request()->is('pengunjung*') ? '' : 'collapsed' }}" href="{{ route('pengunjung') }}">
-          <i class="bi bi-box-arrow-in-right"></i>
-          <span>Pencatatan Kunjungan Tamu</span>
-        </a>
-      </li><!-- End Login Page Nav -->
-      @endif
+     
+      
 
       <li class="nav-item">
         <a class="nav-link {{ request()->is('peminjaman*') ? '' : 'collapsed' }}" href="{{ route('peminjaman') }}">
@@ -232,6 +236,13 @@
         <a class="nav-link {{ request()->is('informasi/buku*') ? '' : 'collapsed' }}" href="{{ route('info-buku') }}">
           <i class="bi bi-arrow-return-right"></i>
           <span>Informasi Buku</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link {{ request()->is('informasi/pengunjung*') ? '' : 'collapsed' }}" href="{{ route('info-pengunjung') }}">
+          <i class="bi bi-arrow-return-right"></i>
+          <span>Informasi Pengunjung</span>
         </a>
       </li><!-- End Register Page Nav -->
       @endif

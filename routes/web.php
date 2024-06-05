@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'TemukanBukuController@index')->name('temukan-buku');
+Route::get('/', 'PengunjungController@index');
 
 Route::get('/login', 'LoginController@index')->name('login');
 Route::post('login/submit', 'LoginController@login')->name('login-submit');
@@ -78,12 +78,11 @@ Route::get('/refresh/scan-anggota', 'PeminjamanController@refreshPanelScanAnggot
 
 
 Route::get('pengunjung', 'PengunjungController@index')->name('pengunjung');
-Route::get('pengunjung-tambah', 'PengunjungController@tambah')->name('pengunjung-tambah');
 Route::post('pengunjung-simpan', 'PengunjungController@simpan')->name('pengunjung-simpan');
 Route::get('pengunjung-delete/{id}', 'PengunjungController@delete')->name('pengunjung-delete');
 
 
-//Route::get('temukan-buku', 'TemukanBukuController@index')->name('temukan-buku');
+Route::get('temukan-buku', 'TemukanBukuController@index')->name('temukan-buku');
 
 //Panel Cari Buku
 Route::get('temukan-buku/cari/buku', 'TemukanBukuController@cari');
@@ -110,3 +109,6 @@ Route::post('relokasi/simpan', 'RelokasiController@simpan')->name('relokasi-simp
 
 Route::get('informasi/buku', 'InfoBukuController@index')->name('info-buku');
 Route::get('informasi/buku/cetak', 'InfoBukuController@cetak')->name('info-buku-cetak');
+
+
+Route::get('informasi/pengunjung', 'InfoPengunjungController@index')->name('info-pengunjung');
