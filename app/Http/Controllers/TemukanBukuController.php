@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Buku;
+use App\Models\KategoriBuku;
 use Illuminate\Support\Facades\DB;
 
 class TemukanBukuController extends Controller
@@ -22,9 +23,20 @@ class TemukanBukuController extends Controller
     {
         if ($request->has('q')) {
             $key = $request->q;
-            $data = DB::table('buku')->select('kode', 'penulis', 'judul')
-            ->where('penulis', 'LIKE', '%'.$key.'%')
-            ->orWhere('judul', 'LIKE', '%'.$key.'%')->get();
+            $kategori = DB::table('kategori_buku')
+                        ->where('nama', '=', $key)->first();
+            //dd($kategori);
+            if($kategori != null){
+                $data = DB::table('buku')->select('kode', 'penulis', 'judul')
+                        ->where('id_kategori', $kategori->id)
+                        ->get();
+            }else{
+                $data = DB::table('buku')->select('kode', 'penulis', 'judul')
+                        ->where('penulis', 'LIKE', '%'.$key.'%')
+                        ->orWhere('judul', 'LIKE', '%'.$key.'%')
+                        ->get();
+            }
+            
             return response()->json($data);
         }
     }

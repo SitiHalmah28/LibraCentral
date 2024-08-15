@@ -19,7 +19,10 @@ class PeminjamanController extends Controller
     public function index()
     {
         $dataAnggota = Anggota::all();
-        return view('peminjaman.peminjaman', compact('dataAnggota'));
+        date_default_timezone_set("Asia/Jakarta");
+        $tanggalPeminjaman= date("Y-m-d");
+        $tanggalPengembalian = date("Y-m-d", strtotime($tanggalPeminjaman . ' + 3 days'));
+        return view('peminjaman.peminjaman', compact('dataAnggota', 'tanggalPeminjaman', 'tanggalPengembalian'));
     }
 
     public function refreshPanelSearch()
@@ -42,9 +45,20 @@ class PeminjamanController extends Controller
     {
         if ($request->has('q')) {
             $key = $request->q;
-            $data = DB::table('buku')->select('kode', 'penulis', 'judul')
-            ->where('penulis', 'LIKE', '%'.$key.'%')
-            ->orWhere('judul', 'LIKE', '%'.$key.'%')->get();
+            $kategori = DB::table('kategori_buku')
+                        ->where('nama', '=', $key)->first();
+            //dd($kategori);
+            if($kategori != null){
+                $data = DB::table('buku')->select('kode', 'penulis', 'judul')
+                        ->where('id_kategori', $kategori->id)
+                        ->get();
+            }else{
+                $data = DB::table('buku')->select('kode', 'penulis', 'judul')
+                        ->where('penulis', 'LIKE', '%'.$key.'%')
+                        ->orWhere('judul', 'LIKE', '%'.$key.'%')
+                        ->get();
+            }
+            
             return response()->json($data);
         }
     }
@@ -109,8 +123,11 @@ class PeminjamanController extends Controller
         if(Auth::user() != null){
             $idAnggota = $request->id;
         }else{
-            $idAnggota = $anggota;
+            //$anggota = Anggota::find($request->anggota);
+            $idAnggota = $request->anggota;
         }
+
+        //dd($anggota);
         $jumlahPeminjamanBelumSelesai = Peminjaman::where('id_anggota', $idAnggota)
                                         ->where('status_peminjaman', 0)->get()->count();
 

@@ -11,7 +11,7 @@
         <div class="card-body">
           <h5 class="card-title">Informasi Pengunjung</h5>
           <!-- Table with stripped rows -->
-          <table class="table datatable">
+          <table id="myTable" class="table table-striped">
             <thead>
               <tr>
                 <th>NIS</th>

@@ -12,14 +12,15 @@
           <h5 class="card-title">Pengembalian</h5>
 
           <!-- Table with stripped rows -->
-          <table class="table datatable">
+          <table id="myTable" class="table table-striped">
             <thead>
               <tr>
                 <th>
-                  Nomor Peminjaman
+                  No. Peminjaman
                 </th>
                 <th>Nama</th>
-                <th>Tanggal</th>
+                <th>Tgl. Pinjam</th>
+                <th>Tgl. Kembali</th>
                 <th>Jumlah Buku</th>
                 <th>Denda</th>
                 <th>Opsi</th>
@@ -31,6 +32,7 @@
                 <td>{{ $value->nomor_peminjaman }}</td>
                 <td>{{ $value->anggota->nama }}</td>
                 <td>{{ date("d-m-Y", strtotime($value->tanggal_peminjaman)) }}</td>
+                <td>{{ date("d-m-Y", strtotime($value->tanggal_pengembalian)) }}</td>
                 <td>{{ $value->total_buku }}</td>
                 <td>{{ $value->total_denda }}</td>
                 

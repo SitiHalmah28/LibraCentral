@@ -7,6 +7,18 @@
   <!-- Left side columns -->
   <div class="col-lg-8">
     <div class="row">
+      <!-- Sales Card -->
+      <div class="col-xxl-12 col-md-12">
+        <div class="card info-card sales-card">
+
+          <div class="card-body">
+            <h5 class="card-title">Cari Buku<span></span></h5>
+            <div id="panel-search">
+              @include('relokasi.panel-search')
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- Recent Sales -->
       <div class="col-12">
         <div class="card recent-sales overflow-auto">

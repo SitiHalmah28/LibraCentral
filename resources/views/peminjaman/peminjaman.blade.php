@@ -9,7 +9,7 @@
     <div class="row">
 
       <!-- Sales Card -->
-      <div class="col-xxl-12 col-md-6">
+      <div class="col-xxl-12 col-md-12">
         <div class="card info-card sales-card">
 
           <div class="card-body">
@@ -86,6 +86,18 @@
         <h5 class="card-title">Scanner Buku<span></span></h5>
         <div class="activity" id="panel-scan">
           @include('peminjaman.panel-scan')  
+        </div>
+        <div class="row mb-3">
+            <label for="inputText" class="col-sm-12 col-form-label">Tanggal Peminjaman</label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control" name="nama" value="{{ $tanggalPeminjaman }}" readonly>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="inputText" class="col-sm-12 col-form-label">Tanggal Pengembalian</label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control" name="nama" value="{{ $tanggalPengembalian }}" readonly>
+            </div>
         </div>
         <a type="button" class="btn btn-primary" href="#" onclick="prosesPeminjaman('{{csrf_token()}}')">Proses Peminjaman</a>
       </div>

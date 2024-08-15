@@ -9,12 +9,12 @@
     <div class="col-lg-12">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Anggota</h5>
-          <a type="button" class="btn btn-primary" href="{{ route('anggota-tambah') }}"><i class="ri-add-circle-fill"></i> Tambah Data</a>
-          <a type="button" class="btn btn-success" href="{{ route('anggota-cetak-kartu') }}"><i class="ri-printer-fill"></i> Cetak Kartu</a>
+          <h5 class="card-title"> Anggota</h5>
+          <a type="button" class="btn btn-primary" style="margin-bottom:10px" href="{{ route('anggota-tambah') }}"><i class="ri-add-circle-fill"></i> Tambah Data</a>
+          <a type="button" class="btn btn-success" style="margin-bottom:10px" href="{{ route('anggota-cetak-kartu') }}"><i class="ri-printer-fill"></i> Cetak Kartu</a>
 
           <!-- Table with stripped rows -->
-          <table class="table datatable">
+          <table id="myTable" class="table table-striped">
             <thead>
               <tr>
                 <th>
@@ -31,7 +31,6 @@
                 <td>{{ $value->nis }}</td>
                 <td>
                     <a type="button" class="btn btn-success" href="{{ route('anggota-cetak', $value->id) }}"><i class="ri-printer-fill"></i></a>
-                    <a type="button" class="btn btn-secondary" href="#" onclick= "event.preventDefault();if(confirm('Apakah Anda Yakin?')) { $('form#hapus').attr('action', '{{ route('anggota-reset', $value->id) }}').submit();}"><i class="ri-lock-password-line"></i></a>
                     <a type="button" class="btn btn-warning" href="{{ route('anggota-edit', $value->id) }}"><i class="ri-pencil-ruler-2-line"></i></a>
                     <a type="button" class="btn btn-danger" href="#" onclick= "event.preventDefault();if(confirm('Apakah Anda Yakin?')) { $('form#hapus').attr('action', '{{ route('anggota-delete', $value->id) }}').submit();}"><i class="ri-delete-bin-2-line"></i></a>
                 </td>

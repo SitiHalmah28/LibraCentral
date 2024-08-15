@@ -22,6 +22,17 @@ class RelokasiController extends Controller
         return view('relokasi.panel-scan');
     }
 
+    public function cari(Request $request)
+    {
+        if ($request->has('q')) {
+            $key = $request->q;
+            $data = DB::table('buku')->select('kode', 'penulis', 'judul')
+            ->where('penulis', 'LIKE', '%'.$key.'%')
+            ->orWhere('judul', 'LIKE', '%'.$key.'%')->get();
+            return response()->json($data);
+        }
+    }
+
     public function simpanBuku(Request $request)
     {
         //dd($request->all());

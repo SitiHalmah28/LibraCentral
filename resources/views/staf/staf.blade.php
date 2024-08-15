@@ -10,10 +10,10 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Staf</h5>
-          <a type="button" class="btn btn-primary" href="{{ route('staf-tambah') }}"><i class="ri-add-circle-fill"></i> Tambah Data</a>
+          <a type="button" class="btn btn-primary" style="margin-bottom: 10px;" href="{{ route('staf-tambah') }}"><i class="ri-add-circle-fill"></i> Tambah Data</a>
 
           <!-- Table with stripped rows -->
-          <table class="table datatable">
+          <table id="myTable" class="table table-striped">
             <thead>
               <tr>
                 <th>

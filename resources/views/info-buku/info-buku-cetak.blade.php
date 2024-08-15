@@ -72,8 +72,9 @@
 		<thead>
         <tr>
             <th scope="col">Judul</th>
-            <th scope="col">Jumlah</th>
-            <th scope="col">Stok</th>
+            <th scope="col">Stok Awal</th>
+            <th scope="col">Jumlah Peminjaman</th>
+            <th scope="col">Stok Akhir</th>
             <th scope="col">Peminjam</th>
         </tr>
 		</thead>
@@ -83,6 +84,7 @@
             <tr>
 	            <th scope="row">{{ $value['judul'] }}</th>
                 <th>{{ $value['jumlah_sebenarnya'] }}</th>
+                <td>{{ $value['jumlah_sebenarnya'] - $value['stok'] }}</td>
                 <th>{{ $value['stok'] }}</th>
                 <th>{{ $value['nama_peminjam'] }}</th>
 	        </tr>
